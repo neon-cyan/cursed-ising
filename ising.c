@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define DELAY 23500
+#define DELAY 35000
 
 float float_rand(){
   float num = rand() / (float) RAND_MAX;
@@ -55,11 +55,10 @@ int main(int argc, char *argv[]) {
   // SET MODEL PARAMETERS ACCORDING TO ARGUMENTS
   float T = 2.5;
   float B = 0.0;
+  const float J = 1;
 
   if (argc >= 2) { sscanf(argv[1], "%f", &T); }
   if (argc == 3) { sscanf(argv[2], "%f", &B); }
-
-  const float J = 1;
 
   // SET MODEL SIZE FROM TERMINAL SCREEN
   int x = 0;
@@ -87,11 +86,18 @@ int main(int argc, char *argv[]) {
     clear();
 
     // UPDATE CURSES SCREEN
+    // Spins
     for (int i = 0; i < x; i++) {
       for (int j = 0; j <  y; j++) {
         if (spins[i][j] == 1){ mvprintw(j, i, "+"); }
         else { mvprintw(j, i, "o"); }
       }
+    }
+    // Info panel
+    if (y > 3 && x > 6) {
+      mvprintw(y-3, x-15, " B = %.1f\n", B);
+      mvprintw(y-2, x-15, " T = %.1f\n", T);
+      mvprintw(y-1, x-15, " E = %.1f\n", energy(&spins, x, y, &B, &J));
     }
     refresh();
 
