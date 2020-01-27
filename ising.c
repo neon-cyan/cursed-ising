@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define DELAY 35000
+#define DELAY 40000
 
 float float_rand(){
   float num = rand() / (float) RAND_MAX;
